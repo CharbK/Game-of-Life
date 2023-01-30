@@ -1,6 +1,12 @@
-import colorama, random
+import os
+import random
+import time
+
+import colorama
+
 
 def print_board(board):
+    os.system("clear")
     print(colorama.Fore.YELLOW, end = "")
     height, width = len(board), len(board[0])
     line = "-"*(width*2+1)
@@ -25,7 +31,7 @@ def generateBoard(width, height, prob):
             row.append(add)
         board.append(row)
     return board
-    
+
 def gameOfLife(board):
     height, width = len(board), len(board[0])
     def check(i, j):
@@ -35,7 +41,7 @@ def gameOfLife(board):
             return 1
         return 0
     def count(i, j) -> None:
-        amount = sum([check(y,x) for y,x in 
+        amount = sum([check(y,x) for y,x in
                     [
                         (i-1,j-1),(i-1,j),(i,j-1),(i-1,j+1),
                         (i+1,j+1),(i+1,j),(i,j+1),(i+1,j-1),
@@ -64,3 +70,11 @@ def gameOfLife(board):
         for j in range(width):
             update(i,j)
     return board
+
+if __name__ == "__main__":
+    board = generateBoard(15,15,3)
+    print_board(board)
+    while 1:
+        gameOfLife(board)
+        print_board(board)
+        time.sleep(0.5)
